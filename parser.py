@@ -86,7 +86,7 @@ class FlightScheduleParser:
                 continue
 
             for col_idx in range(1, len(flight_row)):
-                service_code = flight_row.iloc[col_idx].strip()
+                service_code = f"MFX{flight_row.iloc[col_idx].strip()}"
                 current_route = route_row.iloc[col_idx].strip()
                 current_time = time_row.iloc[col_idx].strip()
 
@@ -112,9 +112,9 @@ class FlightScheduleParser:
                         flight_date += timedelta(days=1)
 
                     date_formatted = flight_date.strftime("%d%b").upper()
-                    date_line = f"{date_formatted}{' ' + service_code if service_code else ''}"
+                    date_line = f"{date_formatted}"
 
-                    flight_line = f"{flight_number} {current_route.replace('-', '').strip()} {time_str}"
+                    flight_line = f"{flight_number} {' ' + service_code if service_code else ''} {current_route.strip()} {time_str}"
                     formatted_line = f"{date_line}\n{flight_line}"
 
                     self.formatted_flights.append(formatted_line)
